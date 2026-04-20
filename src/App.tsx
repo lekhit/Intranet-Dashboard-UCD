@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Search,
   Users,
@@ -28,7 +28,8 @@ import {
   ArrowRight,
   Newspaper,
   UserPlus,
-  Compass
+  Compass,
+  ArrowLeft
 } from 'lucide-react';
 
 // Mock data
@@ -95,14 +96,14 @@ const upcomingEvents = [
 ];
 
 const quickTasks = [
-  { icon: Briefcase, label: 'Submit Timecard', href: '#', color: 'bg-blue-600' },
-  { icon: Calendar, label: 'Book a Room', href: '#', color: 'bg-green-600' },
-  { icon: FileText, label: 'View Policies', href: '#', color: 'bg-amber-600' },
-  { icon: Users, label: 'Staff Directory', href: '#', color: 'bg-purple-600' },
-  { icon: Mail, label: 'Webmail Login', href: '#', color: 'bg-red-600' },
-  { icon: Laptop, label: 'IT Help Desk', href: '#', color: 'bg-cyan-600' },
-  { icon: BookOpen, label: 'Training Portal', href: '#', color: 'bg-pink-600' },
-  { icon: DollarSign, label: 'Travel & Expense', href: '#', color: 'bg-emerald-600' }
+  { icon: Briefcase, label: 'Submit Timecard', href: '#wip', color: 'bg-blue-600' },
+  { icon: Calendar, label: 'Book a Room', href: '#wip', color: 'bg-green-600' },
+  { icon: FileText, label: 'View Policies', href: '#wip', color: 'bg-amber-600' },
+  { icon: Users, label: 'Staff Directory', href: '#wip', color: 'bg-purple-600' },
+  { icon: Mail, label: 'Webmail Login', href: '#wip', color: 'bg-red-600' },
+  { icon: Laptop, label: 'IT Help Desk', href: '#wip', color: 'bg-cyan-600' },
+  { icon: BookOpen, label: 'Training Portal', href: '#wip', color: 'bg-pink-600' },
+  { icon: DollarSign, label: 'Travel & Expense', href: '#wip', color: 'bg-emerald-600' }
 ];
 
 const whoToContact = [
@@ -136,6 +137,47 @@ export default function App() {
   const [layoutBuilderMode, setLayoutBuilderMode] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [showChecklist, setShowChecklist] = useState(false);
+  const [currentHash, setCurrentHash] = useState(window.location.hash);
+
+  useEffect(() => {
+    const onHashChange = () => setCurrentHash(window.location.hash);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  if (currentHash === '#wip') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <header className="bg-gradient-to-r from-blue-900 to-blue-800 text-white shadow-lg py-4 px-4">
+          <div className="max-w-7xl mx-auto flex items-center gap-3">
+            <button onClick={() => window.location.hash = ''} className="p-2 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2">
+               <ArrowLeft className="w-5 h-5" /> Back
+            </button>
+            <span className="font-bold text-xl">DEVAR</span>
+          </div>
+        </header>
+
+        <main className="flex-grow flex items-center justify-center p-4">
+          <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl max-w-lg w-full text-center border-t-4 border-amber-400">
+             <div className="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock className="w-10 h-10" />
+             </div>
+             <h1 className="text-3xl font-bold text-gray-900 mb-4">Work in Progress</h1>
+             <p className="text-gray-600 mb-8 text-lg">
+               This page is currently under construction. We're working hard to bring this feature to you soon!
+             </p>
+             <button 
+               onClick={() => window.location.hash = ''} 
+               className="bg-blue-800 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-md hover:shadow-lg inline-flex items-center gap-2"
+             >
+               <ArrowLeft className="w-5 h-5"/>
+               Return to Dashboard
+             </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   const navItems = ['Home', 'News', 'Policies', 'Tools', 'Directory', 'Resources'];
 
@@ -193,7 +235,7 @@ export default function App() {
               {navItems.map((item) => (
                 <a
                   key={item}
-                  href="#"
+                  href="#wip"
                   className="hover:text-amber-300 transition-colors font-medium relative group"
                 >
                   {item}
@@ -229,7 +271,7 @@ export default function App() {
               {navItems.map((item) => (
                 <a
                   key={item}
-                  href="#"
+                  href="#wip"
                   className="py-2 px-4 hover:bg-blue-700 rounded-lg transition-colors"
                 >
                   {item}
@@ -263,9 +305,9 @@ export default function App() {
             </div>
             <div className="flex flex-wrap justify-center gap-2 mt-3 text-sm">
               <span className="text-blue-200">Popular:</span>
-              <a href="#" className="text-amber-300 hover:underline">timecard</a>
-              <a href="#" className="text-amber-300 hover:underline">holiday schedule</a>
-              <a href="#" className="text-amber-300 hover:underline">travel policy</a>
+              <a href="#wip" className="text-amber-300 hover:underline">timecard</a>
+              <a href="#wip" className="text-amber-300 hover:underline">holiday schedule</a>
+              <a href="#wip" className="text-amber-300 hover:underline">travel policy</a>
             </div>
           </div>
 
@@ -279,7 +321,7 @@ export default function App() {
               {whoToContact.map((contact) => (
                 <a
                   key={contact.name}
-                  href="#"
+                  href="#wip"
                   className="text-center p-3 rounded-lg hover:bg-white/10 transition-colors group"
                 >
                   <contact.icon className="w-6 h-6 mx-auto mb-1 text-amber-300 group-hover:scale-110 transition-transform" />
@@ -383,7 +425,7 @@ export default function App() {
                 <Newspaper className="w-6 h-6 text-blue-800" />
                 News & Announcements
               </h2>
-              <a href="#" className="text-blue-700 hover:text-blue-800 font-medium text-sm flex items-center gap-1">
+              <a href="#wip" className="text-blue-700 hover:text-blue-800 font-medium text-sm flex items-center gap-1">
                 View All News <ChevronRight className="w-4 h-4" />
               </a>
             </div>
@@ -428,7 +470,7 @@ export default function App() {
                   <Calendar className="w-5 h-5 text-blue-800" />
                   Upcoming Events
                 </h2>
-                <a href="#" className="text-blue-700 text-sm">
+                <a href="#wip" className="text-blue-700 text-sm">
                   Calendar
                 </a>
               </div>
@@ -496,7 +538,7 @@ export default function App() {
                 {['Employee Handbook', 'Benefits Guide', 'IT Service Catalog', 'Meeting Templates', 'Policies A-Z'].map((link) => (
                   <a
                     key={link}
-                    href="#"
+                    href="#wip"
                     className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 text-gray-700 hover:text-blue-700 transition-colors"
                   >
                     <span className="text-sm">{link}</span>
